@@ -4,6 +4,7 @@ import pytest
 from select_number import (
     get_divisible_numbers,
     get_valid_integer,
+    main,
 )
 
 
@@ -41,13 +42,25 @@ def test_get_divisible_numbers(capsys):
     """Tests the happy scenario where all conditions are satisfied."""
     get_divisible_numbers(1, 15)
     captured = capsys.readouterr()
-    expected_output = "1\n2\n3 is fizz!\n4\n5 is buzz!\n6 is fizz!\n7\n8\n9 is fizz!\n10 is buzz!\n11\n12 is fizz!\n13\n14\n15 fizz and buzz!\n"
+    expected_output = "1 \n2 \n3 fizz\n4 \n5 buzz\n6 fizz\n7 \n8 \n9 fizz\n10 buzz\n11 \n12 fizz\n13 \n14 \n15 fizzbuzz\n"
     assert captured.out == expected_output
 
 
-def test_get_divisible_numbers_(capsys):
-    """Tests the happy scenario with a smaller range."""
-    get_divisible_numbers(1, 4)
+def test_main_happy_scenario(monkeypatch, capsys):
+    """Tests happy scenario for main"""
+    input_values = iter(["1", "7"])
+    monkeypatch.setattr("builtins.input", lambda _: next(input_values))
+    main()
     captured = capsys.readouterr()
-    expected_output = "1\n2\n3 is fizz!\n4\n"
+    expected_output = "You have selected 1 and 7. Great choices!\n\n1 \n2 \n3 fizz\n4 \n5 buzz\n6 fizz\n7 \n"
+    assert captured.out == expected_output
+
+
+def test_main_greater_first_number_scenario(monkeypatch, capsys):
+    """Tests scenario where first input number is greater than second."""
+    input_values = iter(["7", "1"])
+    monkeypatch.setattr("builtins.input", lambda _: next(input_values))
+    main()
+    captured = capsys.readouterr()
+    expected_output = "The first number should be smaller than the second.\n"
     assert captured.out == expected_output
