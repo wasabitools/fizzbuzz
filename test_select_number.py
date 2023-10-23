@@ -41,12 +41,12 @@ def test_get_divisible_numbers(capsys):
     """Tests the happy scenario where all conditions are satisfied."""
     get_divisible_numbers(1, 15)
     captured = capsys.readouterr()
-    expected_output = "1\n2\n3 is fizz!\n4\n"
+    expected_output = "1\n2\n3 is fizz!\n4\n5 is buzz!\n6 is fizz!\n7\n8\n9 is fizz!\n10 is buzz!\n11\n12 is fizz!\n13\n14\n15 fizz and buzz!\n"
     assert captured.out == expected_output
 
 
-def test_get_divisible_numbers_smaller_range(capsys):
-    """Tests the happy scenario where only %3 == 0 is satisfied."""
+def test_get_divisible_numbers_(capsys):
+    """Tests the happy scenario with a smaller range."""
     get_divisible_numbers(1, 4)
     captured = capsys.readouterr()
     expected_output = "1\n2\n3 is fizz!\n4\n"
