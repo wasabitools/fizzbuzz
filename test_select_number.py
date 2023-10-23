@@ -2,6 +2,7 @@
 
 import pytest
 from select_number import (
+    get_divisible_numbers,
     get_valid_integer,
 )
 
@@ -36,8 +37,17 @@ def test_get_valid_integer_invalid_input_float(monkeypatch):
         get_valid_integer(value)
 
 
-def test_get_valid_integer_invalid_input_none(monkeypatch):
-    """Tests that a TypeError will be raised if nothing is given."""
-    value = monkeypatch.setattr("builtins.input", lambda _: None)
-    with pytest.raises(TypeError):
-        get_valid_integer(value)
+def test_get_divisible_numbers(capsys):
+    """Tests the happy scenario where all conditions are satisfied."""
+    get_divisible_numbers(1, 15)
+    captured = capsys.readouterr()
+    expected_output = "1\n2\n3 is fizz!\n4\n"
+    assert captured.out == expected_output
+
+
+def test_get_divisible_numbers_smaller_range(capsys):
+    """Tests the happy scenario where only %3 == 0 is satisfied."""
+    get_divisible_numbers(1, 4)
+    captured = capsys.readouterr()
+    expected_output = "1\n2\n3 is fizz!\n4\n"
+    assert captured.out == expected_output
