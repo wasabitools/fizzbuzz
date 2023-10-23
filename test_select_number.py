@@ -1,1 +1,3 @@
 """Test module"""
+
+import pytest
