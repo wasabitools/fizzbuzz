@@ -11,8 +11,10 @@ Prerequisites
 
 Installation
  
-  - Clone the repository, as per github instructions.
-
+  - Clone the repository,
+  ```
+  git clone https://github.com/wasabitools/fizzbuzz.git
+  ```
  - Navigate to the project directory:
 ```
 cd fizzbuzz

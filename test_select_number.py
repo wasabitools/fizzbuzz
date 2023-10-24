@@ -73,7 +73,7 @@ def test_main_one_non_number_first_scenario(monkeypatch, capsys):
     monkeypatch.setattr("builtins.input", lambda _: next(input_values))
     main()
     captured = capsys.readouterr()
-    expected_output = "Please, enter a valid integer.\nBoth inputs should be numbers!\n"
+    expected_output = "Please, enter a valid integer.\nSomething is not right! Please check your answers.\n"
     assert captured.out == expected_output
 
 
@@ -83,7 +83,7 @@ def test_main_one_non_number_second_scenario(monkeypatch, capsys):
     monkeypatch.setattr("builtins.input", lambda _: next(input_values))
     main()
     captured = capsys.readouterr()
-    expected_output = "Please, enter a valid integer.\nBoth inputs should be numbers!\n"
+    expected_output = "Please, enter a valid integer.\nSomething is not right! Please check your answers.\n"
     assert captured.out == expected_output
 
 
@@ -93,5 +93,14 @@ def test_main_non_numbers_scenario(monkeypatch, capsys):
     monkeypatch.setattr("builtins.input", lambda _: next(input_values))
     main()
     captured = capsys.readouterr()
-    expected_output = "Please, enter a valid integer.\nPlease, enter a valid integer.\nBoth inputs should be numbers!\n"
+    expected_output = "Please, enter a valid integer.\nPlease, enter a valid integer.\nSomething is not right! Please check your answers.\n"
+    assert captured.out == expected_output
+
+def test_main_out_of_range_numbers_scenario(monkeypatch, capsys):
+    """Tests scenario where no input is a number."""
+    input_values = iter(["0", "102"])
+    monkeypatch.setattr("builtins.input", lambda _: next(input_values))
+    main()
+    captured = capsys.readouterr()
+    expected_output = "Please, enter a number between 1 and 100.\nPlease, enter a number between 1 and 100.\nSomething is not right! Please check your answers.\n"
     assert captured.out == expected_output

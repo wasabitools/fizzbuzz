@@ -39,7 +39,7 @@ def main() -> None:
         else:
             print("The first number should be smaller than the second.")
     except TypeError:
-        print("Both inputs should be numbers!")
+        print("Something is not right! Please check your answers.")
 
 
 if __name__ == "__main__":
