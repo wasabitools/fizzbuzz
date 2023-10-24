@@ -1,6 +1,5 @@
 """Test module for select_number.py"""
 
-import pytest
 from select_number import (
     get_divisible_numbers,
     get_valid_integer,
@@ -24,18 +23,20 @@ def test_get_valid_integer_out_of_range(monkeypatch, capsys):
     assert "Please, enter a number between 1 and 100.\n" == captured.out
 
 
-def test_get_valid_integer_invalid_input(monkeypatch):
+def test_get_valid_integer_invalid_input(monkeypatch, capsys):
     """Tests that a ValueError will be raised if a string is given."""
     value = monkeypatch.setattr("builtins.input", lambda _: "tt")
-    with pytest.raises(ValueError):
-        get_valid_integer(value)
+    get_valid_integer(value)
+    captured = capsys.readouterr()
+    assert "Please, enter a valid integer.\n" == captured.out
 
 
-def test_get_valid_integer_invalid_input_float(monkeypatch):
+def test_get_valid_integer_invalid_input_float(monkeypatch, capsys):
     """Tests that a ValueError will be raised if a float is given."""
     value = monkeypatch.setattr("builtins.input", lambda _: "4.8")
-    with pytest.raises(ValueError):
-        get_valid_integer(value)
+    get_valid_integer(value)
+    captured = capsys.readouterr()
+    assert "Please, enter a valid integer.\n" == captured.out
 
 
 def test_get_divisible_numbers(capsys):
@@ -63,4 +64,34 @@ def test_main_greater_first_number_scenario(monkeypatch, capsys):
     main()
     captured = capsys.readouterr()
     expected_output = "The first number should be smaller than the second.\n"
+    assert captured.out == expected_output
+
+
+def test_main_one_non_number_first_scenario(monkeypatch, capsys):
+    """Tests scenario where one input is not a number."""
+    input_values = iter(["b", "1"])
+    monkeypatch.setattr("builtins.input", lambda _: next(input_values))
+    main()
+    captured = capsys.readouterr()
+    expected_output = "Please, enter a valid integer.\nBoth inputs should be numbers!\n"
+    assert captured.out == expected_output
+
+
+def test_main_one_non_number_second_scenario(monkeypatch, capsys):
+    """Tests scenario where one input is not a number."""
+    input_values = iter(["4", "g"])
+    monkeypatch.setattr("builtins.input", lambda _: next(input_values))
+    main()
+    captured = capsys.readouterr()
+    expected_output = "Please, enter a valid integer.\nBoth inputs should be numbers!\n"
+    assert captured.out == expected_output
+
+
+def test_main_non_numbers_scenario(monkeypatch, capsys):
+    """Tests scenario where no input is a number."""
+    input_values = iter(["b", "c"])
+    monkeypatch.setattr("builtins.input", lambda _: next(input_values))
+    main()
+    captured = capsys.readouterr()
+    expected_output = "Please, enter a valid integer.\nPlease, enter a valid integer.\nBoth inputs should be numbers!\n"
     assert captured.out == expected_output
