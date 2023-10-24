@@ -96,6 +96,7 @@ def test_main_non_numbers_scenario(monkeypatch, capsys):
     expected_output = "Please, enter a valid integer.\nPlease, enter a valid integer.\nSomething is not right! Please check your answers.\n"
     assert captured.out == expected_output
 
+
 def test_main_out_of_range_numbers_scenario(monkeypatch, capsys):
     """Tests scenario where no input is a number."""
     input_values = iter(["0", "102"])
